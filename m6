@@ -1,0 +1,18 @@
+def eight_queens(pop_size, max_generations, pc=0.7, pm=0.01):
+    population =init_pop(pop_size)
+    best_fitness_overall = None
+    for i_gen in range(max_generations):
+        fitness_vals = clac_fitness(population)
+        best_i = fitness_vals.argmax()
+        best_fitness = fitness_vals[best_i]
+        if best_fitness_overall is None or best_fitness > best_fitness_overall:
+            best_fitness_overall = best_fitness
+            best_solution = population [best_i]
+            print(f'\ri_gen={i_gen:06} -f={-best_fitness_overall:03}', end='')
+        if best_fitness == 0:
+            print('\nFound optimal solution')
+            break
+        selected_pop = selection(population, fitness_vals)
+        population = crossover_mutaion(selected_pop, pc, pm)
+    print()
+    print(best_solution)
